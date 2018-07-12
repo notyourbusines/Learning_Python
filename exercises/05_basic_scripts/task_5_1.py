@@ -19,3 +19,17 @@ Mask:
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+
+
+user_input = input('Введите IP-сеть (в формате: 10.1.1.0/24): ')
+user_input = user_input.split('.')
+user_subnet = user_input[0:3]
+octet_A, octet_B, octet_C = user_subnet
+user_mask = (str(user_input[3]).split('/'))[-1]
+ip_template_A = '''
+Network:
+{}       {}       {}       {}'''
+print(ip_template_A.format(octet_A, octet_B, octet_C, '0'))
+ip_template_B = '''
+{:08b}       {:08b}       {:08b}       {:08b}'''
+print(ip_template_B.format(int(octet_A), int(octet_B), int(octet_C), 0))
