@@ -48,3 +48,10 @@ london_co = {
         'routing': True
     }
 }
+
+user_key = input('Enter device name: ')
+keys = str(list(london_co[user_key].keys()))
+keys = keys.replace("'", "").replace('[', '(').replace(']', ')')
+print('Enter parameter name ', keys)
+user_param = input(':')
+print(london_co[user_key].get(user_param, 'Такого параметра нет'))
