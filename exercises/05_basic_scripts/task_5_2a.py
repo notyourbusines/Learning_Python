@@ -18,7 +18,9 @@ Enter parameter name: ios
 Все задания надо выполнять используя только пройденные темы.
 То есть эту задачу можно решить без использования условия if.
 '''
-user_key = input('Enter device name): ')
+user_key = input('Enter device name:')
+
+
 user_param = input('Enter parameter name: ')
 
 london_co = {
