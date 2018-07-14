@@ -48,13 +48,27 @@ switchport mode trunk
 switchport trunk allowed vlan 2,3,4,5
 '''
 
-access_template = [
-    'switchport mode access', 'switchport access vlan {}',
-    'switchport nonegotiate', 'spanning-tree portfast',
-    'spanning-tree bpduguard enable'
-]
+access_template = '''
+    interface {}
+    switchport mode access
+    switchport access vlan {}
+    switchport nonegotiate
+    spanning-tree portfast
+    spanning-tree bpduguard enable
+'''
 
-trunk_template = [
-    'switchport trunk encapsulation dot1q', 'switchport mode trunk',
-    'switchport trunk allowed vlan {}'
-]
+trunk_template = '''
+    interface {} 
+    switchport trunk encapsulation dot1q
+    switchport mode trunk
+    switchport trunk allowed vlan {}
+'''
+
+
+dict ={'access' : {'Interface': 'None', 'Vlan': 'None', 'Template': access_template}, 'trunk' : {'Interface': 'None', 'Vlan': 'None', 'Template': trunk_template}}
+i1 = input('Enter interface mode (access/trunk): ')
+i2 = input('Enter interface type and number: ')
+i3 = input('Enter vlan(s): ')
+dict[i1]['Interface'] = i2
+dict[i1]['Vlan'] = i3
+print((dict[i1]['Template'].format(dict[i1]['Interface'], dict[i1]['Vlan'])))
