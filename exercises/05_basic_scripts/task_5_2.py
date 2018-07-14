@@ -47,3 +47,9 @@ london_co = {
         'routing': True
     }
 }
+
+from sys import argv
+
+user_input = argv[1]
+
+print(london_co[user_input])
