@@ -19,3 +19,23 @@ D: 224-239
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+
+ip_address = input('Введите IP адрес в формате 10.0.1.1: ')
+
+octet_A = ip_address.split('.')[0]
+print(octet_A)
+
+if '255.255.255.255' in ip_address:
+        print('Ваш адрес LOCAL BROADCAST')
+elif '0.0.0.0' in ip_address:
+        print('Ваш адрес UNASSIGNED')    
+elif int(octet_A) <= 127:
+        print('Ваш адрес UNICAST класса A')
+elif int(octet_A) > 127 and int(octet_A) <= 191:
+        print('Ваш адрес UNICAST класса B')
+elif int(octet_A) > 192 and int(octet_A) <= 223:
+        print('Ваш адрес UNICAST класса C')
+elif int(octet_A) > 223 and int(octet_A) <= 239:
+        print('Ваш адрес MULTICAST класса D')
+else:
+     print('Ваш адрес UNUSED')
