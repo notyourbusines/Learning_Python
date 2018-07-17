@@ -17,3 +17,25 @@
 '''
 
 ignore = ['duplex', 'alias', 'Current configuration']
+
+from sys import argv
+
+d,a,c = ignore
+
+file_name_src = argv[1]
+file_name_dst = argv[2]
+
+f = open(file_name_src, 'r')
+
+result = ''
+
+z = open(file_name_dst, 'w')
+
+for line in f:
+    if d in line or a in line or c in line:
+        continue
+    else: 
+        z.writelines(line)
+        
+z.close()
+f.close()
