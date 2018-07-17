@@ -12,3 +12,16 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+
+from sys import argv
+
+file_name = argv[1]
+
+f = open(file_name, 'r')
+
+for line in f:
+    if '!' in line:
+        continue
+    else: 
+        print(line.replace("\n", ""))
+    
