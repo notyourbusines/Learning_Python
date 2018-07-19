@@ -17,10 +17,6 @@ from sys import argv
 
 ignore = ['duplex', 'alias', 'Current configuration']
 
-d,a,c = ignore
-
-print(type(d))
-
 file_name = argv[1]
 
 f = open(file_name, 'r')
@@ -28,9 +24,13 @@ f = open(file_name, 'r')
 for line in f:
     if '!' in line:
         continue
-    elif d in line or a in line or c in line:
-        continue
-    else: 
-        print(line.replace("\n", ""))
+    elif '!' not in line:
+        for i in range(len(ignore)):
+            if ignore[i] in line:
+                break
+        else: 
+            print(line.replace("\n", ""))
+
+f.close()
     
    
