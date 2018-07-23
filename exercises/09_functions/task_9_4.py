@@ -23,7 +23,6 @@
 
 ignore = ['duplex', 'alias', 'Current configuration']
 
-
 def ignore_command(command, ignore):
     '''
     Функция проверяет содержится ли в команде слово из списка ignore.
@@ -35,4 +34,37 @@ def ignore_command(command, ignore):
     * True, если в команде содержится слово из списка ignore
     * False - если нет
     '''
+    
     return any(word in command for word in ignore)
+
+def conf_file_handle(file_name):
+    
+    sort_list = []
+    result_list = {}
+        
+    f = open(file_name, 'r')
+    
+    for each in f:
+        if '!' in each:
+            continue
+        elif ignore_command(each, ignore):
+            continue
+        else:
+            sort_list.append(each.strip("\n"))
+    
+    for zaloopa in sort_list:
+        if not zaloopa.startswith(' '):
+            t = zaloopa
+            sort_list = []
+            result_list[zaloopa] = '1'            
+        else:
+            sort_list.append(zaloopa)
+            result_list[t] = sort_list
+    print(result_list)
+    
+conf_file_handle('config_sw1.txt')
+
+
+            
+    
+    
