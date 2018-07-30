@@ -27,3 +27,26 @@ R6           Fa 0/2          143           R S I           2811       Fa 0/0
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
+
+def parse_cdp_neighbors(file_name):
+    f = open(file_name)
+    
+    result_dic = {}
+    
+    for each in f:
+        if '>' in each:
+            current_hostname = each.split('>')[0]
+        elif 'Eth' in each.split():
+            rmt_list = ()
+            local_list = ()
+            z = each.split()
+            rmt_host, loc_intf, loc_num, *pizda, rmt_intf, rmt_num = z
+            local_list = (current_hostname, loc_intf+loc_num)
+            rmt_list = (rmt_host, rmt_intf+rmt_num)
+            result_dic[local_list] = rmt_list
+    return result_dic
+        
+
+xyz = parse_cdp_neighbors('sw1_sh_cdp_neighbors.txt')
+
+print(xyz)

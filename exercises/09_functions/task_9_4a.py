@@ -49,3 +49,38 @@ def check_ignore(command, ignore):
 
     '''
     return any(word in command for word in ignore)
+
+
+def conf_file_handle(file_name):
+    
+    sort_list = []
+    result_list = {}
+        
+    f = open(file_name, 'r')
+    
+    for each in f:
+        if '!' in each:
+            continue
+        elif check_ignore(each, ignore):
+            continue
+        else:
+            sort_list.append(each.strip("\n"))
+        
+    result_list = {}
+        
+    for zaloopa in sort_list:
+        if not zaloopa.startswith(' '):
+            t = zaloopa
+            result_list[zaloopa] = '1'
+            sort_level2 = {}
+            sort_level3 = []
+        elif zaloopa.startswith('  '):
+            sort_level3.append(zaloopa)
+            result_list[t][y] = sort_level3
+        else:
+            y = zaloopa
+            sort_level2[zaloopa] = ''
+            result_list[t] = sort_level2
+    print(result_list)
+    
+conf_file_handle('config_r1.txt')
