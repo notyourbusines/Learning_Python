@@ -32,3 +32,29 @@
 > pip install graphviz
 
 '''
+import draw_network_graph as bbb
+import parse_cdp_neighbors as fff
+
+zzz1 = fff.parse_cdp_neighbors('sh_cdp_n_sw1.txt')
+zzz2 = fff.parse_cdp_neighbors('sh_cdp_n_r1.txt')
+zzz3 = fff.parse_cdp_neighbors('sh_cdp_n_r2.txt')
+zzz4 = fff.parse_cdp_neighbors('sh_cdp_n_r3.txt')
+
+zzz = {**zzz1,**zzz2, **zzz3, **zzz4}
+print('Исходный массив:', zzz)
+
+list2 = list(zzz.values())
+
+print(list2)
+
+p = zzz.copy()
+
+for each in zzz:
+    for zaloopa in list2:
+        if each == zaloopa:
+            del(p[each])
+            list2.remove(zzz[each])
+            break
+       
+print(p)
+bbb.draw_topology(p, '/home/python/Learning_Python/exercises/11_modules/topology_11_2a_red')
