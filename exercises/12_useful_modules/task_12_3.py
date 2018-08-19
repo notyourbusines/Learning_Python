@@ -21,3 +21,16 @@ Reachable    Unreachable
 То есть, до выполнения функции и после списки должны выглядеть одинаково.
 
 '''
+from tabulate import tabulate
+
+def ip_table(reachable, unreachable):
+    
+    t_header = ['Reachable', 'Unreachable']
+    result = {'Reachable':reach, 'Unreachable':unreach}
+    print(tabulate(result, headers = 'keys'))
+
+reach = ['10.1.1.1', '10.1.1.2', '10.1.1.3','10.1.1.4']
+unreach = ['10.1.1.7', '10.1.1.8', '10.1.1.9']
+
+ip_table(reach, unreach)
+
