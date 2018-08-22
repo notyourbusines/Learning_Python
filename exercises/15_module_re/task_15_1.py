@@ -38,3 +38,17 @@ Loopback100                100.0.0.1       YES manual up                    up
 
 
 '''
+import re
+from sys import argv
+
+fname, imp1 = argv[1:]
+
+f = open(fname)
+for each in f:
+    match = re.search(imp1, each)
+    if match:
+        print(each.strip('\n'))
+    else:
+        continue
+
+
