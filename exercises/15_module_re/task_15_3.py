@@ -22,3 +22,23 @@
 диапазоны адресов и так далее, так как обрабатывается вывод команды, а не ввод пользователя.
 
 '''
+
+import re
+
+def parse_cfg(fname):
+    f = open(fname)
+    rslt = []
+    for each in f:
+        zmatch = re.search('address \d+.\d+.\d+.\d+ \d+.\d+.\d+.\d+', each)
+        
+        if zmatch:
+            zmatch = zmatch.group()
+            ip_addr = zmatch.split(' ')[1]
+            netmask = zmatch.split(' ')[2]
+            tmp_list = tuple([ip_addr, netmask])
+            rslt.append(tmp_list)
+            print(rslt)
+        else:
+            continue
+                
+parse_cfg('config_r1.txt')
