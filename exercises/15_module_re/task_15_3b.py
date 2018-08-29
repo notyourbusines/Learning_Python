@@ -24,3 +24,38 @@ Ethernet0/1 соответствует список из двух кортеже
 диапазоны адресов и так далее, так как обрабатывается вывод команды, а не ввод пользователя.
 
 '''
+import re
+
+def parse_cfg(fname):
+    f = open(fname)
+    rslt = {}
+    z = ''
+    for each in f:
+        xmatch = re.search('address \d+.\d+.\d+.\d+ \d+.\d+.\d+.\d+ secondary', each)
+        zmatch = re.search('address \d+.\d+.\d+.\d+ \d+.\d+.\d+.\d+', each)
+        t = re.search('interface \w+\d+/\d+|interface \w+\d+', each)
+        if t:
+            z = t.group()
+            continue
+        elif zmatch:
+            if xmatch:
+                xmatch = xmatch.group()
+                ip_addr = xmatch.split(' ')[1]
+                netmask = xmatch.split(' ')[2]
+                tmp_list2 = [ip_addr, netmask]
+                tmp_list3 = tuple(tmp_list1+tmp_list2)
+                #my_list = tuple(tmp_list3)
+                rslt[z] = tmp_list3
+            else:
+                zmatch = zmatch.group()
+                ip_addr = zmatch.split(' ')[1]
+                netmask = zmatch.split(' ')[2]
+                tmp_list1 = [ip_addr, netmask]
+                tmp_list = tuple(tmp_list1)
+                #rslt.append(tmp_list)
+                rslt[z] = tmp_list
+        else:
+            continue
+    print(rslt)
+
+parse_cfg('config_r2.txt')
