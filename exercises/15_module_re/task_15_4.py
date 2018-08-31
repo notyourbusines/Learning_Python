@@ -21,3 +21,19 @@
 Проверить работу функции на примере файла sh_ip_int_br_2.txt.
 
 '''
+import re
+
+def parse_sh_ip_int_br(fname):
+    rslt = []
+    xyz = []
+    f = open(fname)
+    for each in f:
+        t = re.search('Ethernet|Loopback', each)
+        if t:
+            if t:
+                infr, ipaddr, *other, stat, proto = each.split()
+                tmp_lst = [infr, ipaddr, stat, proto]
+                rslt.append(tuple(tmp_lst))
+    print(rslt)
+
+parse_sh_ip_int_br('sh_ip_int_br_2.txt')
