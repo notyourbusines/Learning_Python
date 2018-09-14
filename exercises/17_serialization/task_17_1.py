@@ -44,8 +44,53 @@
 '''
 
 import glob
+import re
+import csv
 
 sh_version_files = glob.glob('sh_vers*')
 #print(sh_version_files)
 
 headers = ['hostname', 'ios', 'image', 'uptime']
+
+def parse_sh_version():
+    lst_list = []
+    for each in sh_version_files:
+        tmp_rslt = []
+        host_name = re.search('r\d', each)
+        #print(host_name)
+        if host_name.group() == 'r1':
+            tmp_rslt.append('r1')
+        elif host_name.group() == 'r2':
+            tmp_rslt.append('r2')
+        elif host_name.group() == 'r3':
+            tmp_rslt.append('r3')
+        with open(each) as f:
+            for line_s in f:
+                ios_regex = re.search('Version (?P<ios>\d+.\d\(\d+\)\w+)', line_s)
+                image = re.search('file is \"(?P<image>\S+)\"', line_s)
+                uptime = re.search('uptime is (?P<uptime>\d+ days, \d+ hours, \d+ minutes)', line_s)
+                if ios_regex:
+                    tmp_rslt.append(ios_regex.group('ios'))
+                elif image:
+                    tmp_rslt.append(image.group('image'))
+                elif uptime:
+                    uptm = uptime.group('uptime')
+                    uptm = uptm.replace(',', '')
+                    tmp_rslt.append(uptm)
+        lst_list.append(tmp_rslt)
+    #print(lst_list)
+    return(lst_list)
+
+def write_to_csv(filenm, datanm):
+    with open(filenm, 'w') as z:
+        writer = csv.writer(z)
+        for line_z in zaloopa:
+            writer.writerow(line_z)
+
+zaloopa = parse_sh_version()
+zaloopa.append(headers)
+zaloopa.reverse()
+write_to_csv('routers_inventory.csv', zaloopa)
+print(zaloopa)
+
+
