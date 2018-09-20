@@ -18,5 +18,19 @@ create_db.py
 Часть кода может быть глобальной.
 """
 
-db_filename = 'dhcp_snooping.db'
-schema_filename = 'dhcp_snooping_schema.sql'
+import sqlite3
+
+def create_db_connect():
+
+    db_filename = 'dhcp_snooping.db'
+    schema_filename = 'dhcp_snooping_schema.sql'
+
+    connection = sqlite3.connect(db_filename)
+    cursor = connection.cursor()
+    with open(schema_filename) as db:
+        pizda = db.read()
+    cursor.executescript(pizda)
+    connection.commit()
+    return(connection)
+
+create_db_connect()
