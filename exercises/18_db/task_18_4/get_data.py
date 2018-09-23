@@ -84,30 +84,46 @@ if (len(argv) == 3):
     cursor.execute('SELECT * from dhcp WHERE {} = "{}"'.format(keyz, valuez))
     rowz = cursor.fetchall()
     rslt = []
-    tmp = []
+    tmp_active = []
+    tmp_passive = []
     for each in rowz:
         #print(each)
         #tmp = []
-        mac, vlan, _, intf, sw = each
+        mac, ipaddr, vlan, intf, sw, active = each
         mac_mac = ['mac', mac]
-        vlan_vlan = ['vlan', vlan]
+        vlan_vlan = ['ip_addr', ipaddr]
+        vlan = ['vlan', vlan]
         intf_intf = ['interface', intf]
         sw_sw = ['sw', sw]
-        tmp.append(tuple(mac_mac))
-        tmp.append(tuple(vlan_vlan))
-        tmp.append(tuple(intf_intf))
-        tmp.append(tuple(sw_sw))
-        print(tmp)
-    print(tabulate(tmp))
+        if active == 1:
+            tmp_active.append(tuple(mac_mac))
+            tmp_active.append(tuple(vlan_vlan))
+            tmp_active.append(tuple(vlan))
+            tmp_active.append(tuple(intf_intf))
+            tmp_active.append(tuple(sw_sw))
+        else:
+            tmp_passive.append(tuple(mac_mac))
+            tmp_passive.append(tuple(vlan_vlan))
+            tmp_passive.append(tuple(vlan))
+            tmp_passive.append(tuple(intf_intf))
+            tmp_passive.append(tuple(sw_sw))
+    print('Detailed information for host(s) with {} {}: '.format(keyz, valuez))
+    print(tabulate(tmp_active))
+    print('Iactive values:')
+    print(tabulate(tmp_passive))
 elif (len(argv) == 1):
     piska = connect_to_db()
     cursor = piska.cursor()
-    cursor.execute('SELECT * from dhcp')
-    rowz = cursor.fetchall()
-    print('Table DHCP contains following records: ')
-    print(tabulate(rowz))
+    cursor.execute('SELECT mac, ip, vlan, interface, switch FROM dhcp WHERE active = 0')
+    rowz_inactive = cursor.fetchall()
+    cursor.execute('SELECT mac, ip, vlan, interface, switch FROM dhcp WHERE active = 1')    
+    rowz_active = cursor.fetchall()
+    print('Active values: ')
+    print(tabulate(rowz_active))
+    print('Inactive values: ')
+    print(tabulate(rowz_inactive))
 else:
-    print('User 0 or 2 arguments only!')
+    print('Use 0 or 2 arguments only!')
 
 
     
