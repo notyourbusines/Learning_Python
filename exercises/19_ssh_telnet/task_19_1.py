@@ -17,5 +17,23 @@
 Отправить команду command на все устройства из файла devices.yaml (для этого надо считать информацию из файла) с помощью функции send_show_command.
 
 '''
+import yaml
+from netmiko import ConnectHandler
 
 command = 'sh ip int br'
+
+def send_show_command(dev_to_send, commands_to_send):
+    for each in dev_to_send:
+        with ConnectHandler(**each) as ssh:
+            ssh.enable()
+            
+            result = ssh.send_command(commands_to_send)
+            print(result)
+
+with open('devices.yaml') as dev:
+        devs_param = yaml.load(dev)
+        for zzz in devs_param['routers']:
+            print(zzz)
+            p = devs_param['routers']
+        
+send_show_command(p, command)
