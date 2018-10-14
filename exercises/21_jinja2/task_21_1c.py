@@ -74,4 +74,4 @@ def generate_cfg_from_template(template_dir, varibls, **args):
         print(error_message)
             
     
-generate_cfg_from_template('templates/for.txt', 'py_dict')
+#generate_cfg_from_template('templates/for.txt', 'py_dict')
