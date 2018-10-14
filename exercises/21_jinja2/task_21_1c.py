@@ -44,3 +44,34 @@ data_dict = {
     'id': 3,
     'name': 'R3'
 }
+
+
+from jinja2 import Environment, FileSystemLoader, Template
+import yaml
+import sys
+import json
+import os
+
+def generate_cfg_from_template(template_dir, varibls, **args):
+    
+    tmp_dir, tmplate = os.path.split(template_dir)
+    #print(args)
+    
+    env = Environment(loader=FileSystemLoader(tmp_dir), trim_blocks=True)
+    template = env.get_template(tmplate)
+    
+    if 'yml' in varibls:
+        #print('Попал на YAML')
+        variables = yaml.load(open(varibls))
+        print(template.render(variables))
+    elif 'json' in varibls:
+        variables = json.load(open(varibls))
+        print(template.render(variables))
+    elif 'py_dict' in varibls:
+        variables = data_dict
+        print(template.render(variables))
+    else:
+        print(error_message)
+            
+    
+generate_cfg_from_template('templates/for.txt', 'py_dict')
