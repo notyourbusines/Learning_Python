@@ -19,3 +19,11 @@
 Не копируйте код функции.
 
 '''
+from jinja2 import Environment, FileSystemLoader, Template
+import yaml
+import sys
+import json
+import os
+from task_21_1c import generate_cfg_from_template
+
+generate_cfg_from_template('templates/ospf.txt', 'data_files/ospf3.yml')
